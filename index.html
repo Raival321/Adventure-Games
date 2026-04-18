@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventure Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="startscreen">
+        <h1>Adventure Game</h1>
+        <p>Masuk ke dunia petualangan dan selesaikan semua tantangan!</p>
+        <button onclick="
+        startscreen.style.display = 'none';
+        gameUI.style.display = 'block';
+        " 
+        style="background: yellow;"
+        >Start Game</button>
+    </div>
+    
+    <div id="gameUI" style="display: none;">
+        <div class="header">
+            <h2 class="title">Adventure Game</h2>
+            <p id="nyawa" class="life-box">Life = 3</p>
+        </div>
+        <div style="margin-top: 30px;">
+            <button onclick="
+                document.body.style.background='green';
+                level1.style.display = 'block';
+                level2.style.display = 'none';
+                level3.style.display = 'none';
+                ">Treasure Room</button>
+            <button onclick="
+                if (unlock2 == true){
+                    document.body.style.background='green';
+                    level1.style.display = 'none';
+                    level2.style.display = 'block';
+                    level3.style.display = 'none';
+                } else{
+                    alert('You need to unlock this level first!');
+                }
+                ">Mystery Door</button>
+            <button onclick="
+                if (unlock3 == true){
+                    document.body.style.background='grey';
+                    level1.style.display = 'none';
+                    level2.style.display = 'none';
+                    level3.style.display = 'block';
+                } else{
+                    alert('You need to unlock this level second!');
+                }
+                ">Dark Forest</button>
+        </div>
+        <hr>
+        <div id="level1" class="card hidden">
+            <h2>Treasure Room</h2>
+            <input type="text" id="aksi" placeholder="ketik buka">
+            <br><br>
+            <button onclick="
+                if (aksi.value == 'buka'){
+                    alert('Congratulations! You found the treasure!');
+                    unlock2 = true;
+                } else{
+                    alert('Wrong action! Try again.');
+                }
+                ">Aksi</button>
+                <p id="hasil"></p>
+        </div>
+        <div id="level2" class="card hidden">
+            <h2>Mystery Door</h2>
+            <input type="text" id="pintu" placeholder="kiri/kanan">
+            <br><br>
+            <button onclick="
+                if (pintu.value == 'kiri'){
+                    alert('Congratulations! You found the secret passage!');
+                    unlock3 = true;
+                } else{
+                    life--;
+                    nyawa.innerHTML = 'Life = ' + life;
+                    hasil2.innerHTML = 'Wrong choice! Try again.';
+                    alert('Wrong choice! Try again.');
+
+                    if(life == 0){
+                        hasil2.innerHTML = 'Game Over! You have no more lives left.';
+                        alert('Game Over! You have no more lives left.');
+                        document.body.style.background='red';
+                        unlock3 = true;
+                    }
+                }
+                ">Pilih</button>
+                <p id="hasil2"></p>
+        </div>
+        <div id="level3" class="card hidden">
+            <h2>Dark Forest</h2>
+            <input type="text" id="jalan" placeholder="left/right/straight">
+            <br><br>
+            <button onclick="
+                if(jalan.value.toLowerCase() == 'right'){
+                    hasil3.innerHTML = 'Congratulations! You found the exit!';
+                } else if(jalan.value.toLowerCase() == 'left' || jalan.value.toLowerCase() == 'straight'){
+                    life--;
+                    nyawa.innerHTML = 'Life = ' + life;
+                    hasil3.innerHTML = 'Wrong path! Try again.';
+                    alert('Wrong path! Try again.');
+
+                    if(life == 0){
+                        hasil3.innerHTML = 'Game Over! You have no more lives left.';
+                        alert('Game Over! You have no more lives left.');
+                        document.body.style.background='red';
+                    }
+                } else{
+                    alert('Invalid input! Please enter left, right, or straight.');
+                }
+            ">Jalan</button>
+            <p id="hasil3"></p>
+        </div>    
+        <br>
+        <button onclick="
+            life = 3;
+            unlock2 = false;
+            unlock3 = false;    
+
+            nyawa.innerHTML = 'Life = 3';
+            hasil.innerHTML = '';
+            hasil2.innerHTML = '';
+            hasil3.innerHTML = '';
+
+            level1.style.display = 'none';
+            level2.style.display = 'none';
+            level3.style.display = 'none';
+            document.body.style.background='white';
+        ">Restart Game</button>
+    </div>
+
+    <script>
+        // Initialize game variables
+        let life = 3;
+        let unlock2 = false;
+        let unlock3 = false;
+    </script>
+</body>
+</html>
